@@ -2,7 +2,7 @@
 
 "Oh, my God!  Helen! It was the band!  The speckled band!"
 
-Speckled band breaks string on chunks depending on code ranges
+Speckled band breaks a string on chunks depending on code ranges
 
 ## Installation
 
