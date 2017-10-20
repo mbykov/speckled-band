@@ -1,10 +1,9 @@
 // morpheus-eastern segmenter
 
-const path = require('path')
-const util = require('util')
-var debug = (process.env.debug == 'true') ? true : false;
+// const util = require('util')
+// var debug = (process.env.debug == 'true') ? true : false;
 
-module.exports = spband;
+// CR U+000D; LF U+000A
 
 // https://stackoverflow.com/questions/1366068/whats-the-complete-range-for-chinese-characters-in-unicode
 // ck                                   Range       Comment
@@ -17,55 +16,29 @@ module.exports = spband;
 // CJK Compatibility Ideographs            F900-FAFF   Duplicates, unifiable variants, corporate characters
 // CJK Compatibility Ideographs Supplement 2F800-2FA1F Unifiable variants
 
-let coderange = {
-    'zh': ['4E00-9FFF']
+// a = '吃药病才会好。 some words 你得按时吃药 Nǐ děi ànshí'
+// a.split(/([\u4E00-\u9FFF\u3002]+)/)
+
+let coderanges = {
+  'zh': '([\u4E00-\u9FFF\u3002]+)'
 }
 
-function spband (code, str, cb) {
-    let ranges = coderange[code]
-    let rstr = ranges.map(r => { return r.split('-').map(r => { return ['\\u', r].join('')}).join('-') }).join('')
-    rstr = ['[', rstr, ']'].join('')
-    let re = new RegExp(rstr)
-    let mess = parseClause(re, str)
-    cb(null, mess)
+function pars (str) {
+  str = str.trim().replace(/\r?\n+/, '\n')
+  return str.split('\n')
 }
 
-function parseClause(re, str) {
-    let clauses = []
-    let syms = str.split('')
-    let clause, space
-    syms.forEach(sym => {
-        if (re.test(sym)) {
-            if (!clause) clause = []
-            clause.push(sym)
-            if (space) {
-                let str = space.join('')
-                clauses.push({sp:str})
-                space = null
-            }
-        } else {
-            if (!space) space = []
-            space.push(sym)
-            if (clause) {
-                let str = clause.join('')
-                clauses.push({cl: str})
-                clause = null
-            }
-        }
+export function zh (str) {
+  let ps = pars(str)
+  return ps.map((p) => {
+    let re = new RegExp(coderanges['zh'])
+    let arr = p.split(re)
+    let cls = arr.map((cl) => {
+      let type = (re.test(cl)) ? 'cl' : 'sp'
+      return {text: cl, type: type}
     })
-    if (clause) {
-        let str = clause.join('')
-        clauses.push({cl: str})
-    }
-    if (space) {
-        let str = space.join('')
-        clauses.push({sp: str})
-    }
-    return clauses
+    return cls
+  })
 }
 
-function log() { console.log.apply(console, arguments); }
-
-function p(o) {
-    console.log(util.inspect(o, false, null))
-}
+// function log () { console.log.apply(console, arguments) }
