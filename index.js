@@ -20,7 +20,8 @@
 // a.split(/([\u4E00-\u9FFF\u3002]+)/)
 
 let coderanges = {
-  'zh': '([\u4E00-\u9FFF\u3002]+)'
+  // 'zh': '([\u4E00-\u9FFF\u3002]+)'
+  'zh': '([\u4E00-\u9FFF]+)'
 }
 
 function pars (str) {
@@ -29,9 +30,10 @@ function pars (str) {
 }
 
 export function zh (str) {
+  let re = new RegExp(coderanges['zh'])
+  if (!re.test(str)) return
   let ps = pars(str)
   return ps.map((p) => {
-    let re = new RegExp(coderanges['zh'])
     let arr = p.split(re)
     let cls = arr.map((cl) => {
       let type = (re.test(cl)) ? 'cl' : 'sp'
