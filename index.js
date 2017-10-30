@@ -2,6 +2,7 @@
 
 // const util = require('util')
 // var debug = (process.env.debug == 'true') ? true : false;
+const _ = require('lodash')
 
 // CR U+000D; LF U+000A
 
@@ -35,11 +36,12 @@ export function zh (str) {
   let ps = pars(str)
   return ps.map((p) => {
     let arr = p.split(re)
-    let cls = arr.map((cl) => {
+    let cls = arr.map((cl, idx) => {
+      // if (!cl) return
       let type = (re.test(cl)) ? 'cl' : 'sp'
-      return {text: cl, type: type}
+      return {text: cl, type: type, idx: idx}
     })
-    return cls
+    return _.compact(cls)
   })
 }
 
