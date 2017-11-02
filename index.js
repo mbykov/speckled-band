@@ -30,7 +30,7 @@ function pars (str) {
   return str.split('\n')
 }
 
-export function zh (str) {
+function zh (str) {
   let re = new RegExp(coderanges['zh'])
   if (!re.test(str)) return
   let ps = pars(str)
@@ -44,5 +44,7 @@ export function zh (str) {
     return _.compact(cls)
   })
 }
+
+module.exports = zh
 
 // function log () { console.log.apply(console, arguments) }

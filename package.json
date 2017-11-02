@@ -1,6 +1,6 @@
 {
   "name": "speckled-band",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Speckled band breaks a string on chunks depending on code ranges",
   "main": "index.js",
   "scripts": {
