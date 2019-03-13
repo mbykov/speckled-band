@@ -1,32 +1,26 @@
 {
+  "private": true,
   "name": "speckled-band",
-  "version": "0.4.0",
+  "productName": "Speckled band",
   "description": "Speckled band breaks a string on chunks depending on code ranges",
-  "main": "index.js",
+  "version": "2.0.0",
+  "author": "Michael Bykov <michael.bykov@gmail.com>",
+  "copyright": "© 2017-1019, Michael Bykov",
+  "homepage": "http://diglossa.org",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified"
+    "build": "babel src -d dist",
+    "sband": "npm run build && node dist/run",
+    "start": "npm run build && node ."
   },
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/mbykov/speckled-band.git"
-  },
-  "keywords": [
-    "chinese",
-    "segmentation",
-    "morphology"
-  ],
-  "author": {
-    "name": "Michael Bykov",
-    "email": "m.bykov@gmail.com"
-  },
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/mbykov/speckled-band/issues"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "debug": "^4.1.1"
   },
   "dependencies": {
-  },
-  "devDependencies": {
-    "mocha": "*",
-    "should": "*"
+    "lodash": "^4.17.11"
   }
 }
