@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "speckled-band",
   "productName": "Speckled band",
   "description": "Speckled band breaks a string on chunks depending on code ranges",
