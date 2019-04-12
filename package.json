@@ -2,15 +2,15 @@
   "name": "speckled-band",
   "productName": "Speckled band",
   "description": "Speckled band breaks a string on chunks depending on code ranges",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "author": "Michael Bykov <michael.bykov@gmail.com>",
   "copyright": "© 2017-1019, Michael Bykov",
   "homepage": "http://diglossa.org",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist",
-    "sband": "npm run build && node dist/run",
-    "start": "npm run build && node ."
+    "start": "npm run build && node dist/run",
+    "start_": "npm run build && node ."
   },
   "license": "MIT",
   "devDependencies": {

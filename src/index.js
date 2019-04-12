@@ -19,42 +19,42 @@ let puncts = '([\u002E\u002C\u0021\u003A\u003B\u00B7\u0F0D])'
 let coderanges = {
   'zho': '([\u4E00-\u9FFF]+)',
   'tib': '([\u0F00-\u0FFF]+)',
-  'grc': '([\u0370-\u03FF\u1F00-\u1FFF\u0300-\u036F\u0027\u0020]+)' // note: grc includes space - \u0020
+  'grc': '([\u0370-\u03FF\u1F00-\u1FFF\u0300-\u036F\u0027]+)' // note: grc not includes space - \u0020
 }
 
+let spaces = ['\u0020']
+
 export default (str, code) => {
+  if (!coderanges[code]) return
+  str = str.replace(/ +/g, ' ').trim()
   let re = new RegExp(coderanges[code])
   if (!re.test(str)) return
-  let clean = str.trim().replace(/᾽/g, "\'")
-  let wopunct = clean.split("'").join('')
-  if (!re.test(wopunct)) return
   let rep = new RegExp(puncts)
-  let rows = clean.replace(/\r?\n+/, '\n').split('\n')
-  let rclauses = rows.map(row => { return row.split(rep) })
-  let spans = []
+  let rows = str.replace(/\r?\n+/, '\n').split('\n')
+  let spars = []
   rows.forEach(row => {
     let spns = []
     let rclauses = row.split(rep)
     rclauses.forEach(rclause => {
+      rclause = rclause.trim()
       if (rep.test(rclause)) {
         let spn = {text: rclause, punct: true}
         spns.push(spn)
       } else {
         let clauses = rclause.split(re)
-        clauses = _.compact(clauses)
         clauses.forEach(clause => {
-          clause = clause.trim()
+          // clause = clause.trim()
           if (!clause) return
           let lang = (re.test(clause)) ? true : false
           let span = {text: clause}
-          if (lang) span.lang = code
-          // span[code] = true
-          // if (lang) { }
+          if (clause == ' ') span.space = true
+          else if (lang) span.lang = true
+          else span.other = true
           spns.push(span)
         })
       }
     })
-    spans.push(spns)
+    spars.push(spns)
   })
-  return spans
+  return spars.filter(function(sub) { return sub.length;  })
 }

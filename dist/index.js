@@ -25,26 +25,25 @@ var puncts = "([.,!:;\xB7\u0F0D])"; // san - sansktit
 var coderanges = {
   'zho': "([\u4E00-\u9FFF]+)",
   'tib': "([\u0F00-\u0FFF]+)",
-  'grc': "([\u0370-\u03FF\u1F00-\u1FFF\u0300-\u036F' ]+)" // note: grc includes space - \u0020
+  'grc': "([\u0370-\u03FF\u1F00-\u1FFF\u0300-\u036F']+)" // note: grc not includes space - \u0020
 
 };
+var spaces = [" "];
 
 var _default = function _default(str, code) {
+  if (!coderanges[code]) return;
+  str = str.replace(/ +/g, ' ').trim();
   var re = new RegExp(coderanges[code]);
   if (!re.test(str)) return;
-  var clean = str.trim().replace(/᾽/g, "\'");
-  var wopunct = clean.split("'").join('');
-  if (!re.test(wopunct)) return;
   var rep = new RegExp(puncts);
-  var rows = clean.replace(/\r?\n+/, '\n').split('\n');
-  var rclauses = rows.map(function (row) {
-    return row.split(rep);
-  });
-  var spans = [];
+  var rows = str.replace(/\r?\n+/, '\n').split('\n');
+  var spars = [];
   rows.forEach(function (row) {
     var spns = [];
     var rclauses = row.split(rep);
     rclauses.forEach(function (rclause) {
+      rclause = rclause.trim();
+
       if (rep.test(rclause)) {
         var spn = {
           text: rclause,
@@ -53,24 +52,23 @@ var _default = function _default(str, code) {
         spns.push(spn);
       } else {
         var clauses = rclause.split(re);
-        clauses = _.compact(clauses);
         clauses.forEach(function (clause) {
-          clause = clause.trim();
+          // clause = clause.trim()
           if (!clause) return;
           var lang = re.test(clause) ? true : false;
           var span = {
             text: clause
           };
-          if (lang) span.lang = code; // span[code] = true
-          // if (lang) { }
-
+          if (clause == ' ') span.space = true;else if (lang) span.lang = true;else span.other = true;
           spns.push(span);
         });
       }
     });
-    spans.push(spns);
+    spars.push(spns);
   });
-  return spans;
+  return spars.filter(function (sub) {
+    return sub.length;
+  });
 };
 
 exports.default = _default;
