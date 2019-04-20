@@ -2,7 +2,7 @@
   "name": "speckled-band",
   "productName": "Speckled band",
   "description": "Speckled band breaks a string on chunks depending on code ranges",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "author": "Michael Bykov <michael.bykov@gmail.com>",
   "copyright": "© 2017-1019, Michael Bykov",
   "homepage": "http://diglossa.org",
