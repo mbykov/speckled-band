@@ -24,12 +24,12 @@ var d = debug; // https://iso639-3.sil.org/code_tables/639/data --> three letter
 // general punctuations \u2000-\u206F
 // common punctuation in this version of sband
 
-var puncts = "([.,!:;\xB7\u0F0D])"; // san - sansktit
+var puncts = "([.,!:;\xB7\u0F0D\u2000-\u206F])"; // san - sansktit
 
 var coderanges = {
   'zho': "([\u4E00-\u9FFF]+)",
   'tib': "([\u0F00-\u0FFF]+)",
-  'grc': "([\u0370-\u03FF\u1F00-\u1FFF\u0300-\u036F\u1FBD\u2019]+)" // note: grc not includes space - \u0020, and not includes apostrophe \u0027
+  'grc': "([\u0370-\u03FF\u1F00-\u1FFF\u0300-\u036F\u1FBD]+)" // note: grc not includes space - \u0020,  apostrophe \u0027, right.quot.mark \u2019, but includes coronis \u1fbd
 
 };
 var spaces = [" "];
