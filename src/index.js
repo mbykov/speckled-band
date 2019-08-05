@@ -15,9 +15,10 @@ let d = debug
 // right single quotation mark - ' - \u2019
 // left single quotation mark - ' - \u2018
 // general punctuations \u2000-\u206F
+// \u0387 - greek ano teleia
 
 // common punctuation in this version of sband
-let puncts = '([\u002E\u002C\u0021\u003A\u003B\u00B7\u0F0D\u2000-\u206F])'
+let puncts = '([\u002E\u002C\u0021\u003A\u003B\u00B7\u0F0D\u2000-\u206F\u0387])'
 
 // san - sansktit
 let coderanges = {
@@ -61,10 +62,5 @@ export default (str, code) => {
     })
     spars.push(spns)
   })
-  return spars.filter(function(sub) { return sub.length;  })
+  return spars.filter(function(sub) { return sub.length })
 }
-
-/*
-  χαλκὸν
-
-*/

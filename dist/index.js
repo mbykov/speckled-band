@@ -22,9 +22,10 @@ var d = debug; // https://iso639-3.sil.org/code_tables/639/data --> three letter
 // right single quotation mark - ' - \u2019
 // left single quotation mark - ' - \u2018
 // general punctuations \u2000-\u206F
+// \u0387 - greek ano teleia
 // common punctuation in this version of sband
 
-var puncts = "([.,!:;\xB7\u0F0D\u2000-\u206F])"; // san - sansktit
+var puncts = "([.,!:;\xB7\u0F0D\u2000-\u206F\u0387])"; // san - sansktit
 
 var coderanges = {
   'zho': "([\u4E00-\u9FFF]+)",
@@ -74,10 +75,5 @@ var _default = function _default(str, code) {
     return sub.length;
   });
 };
-/*
-  χαλκὸν
-
-*/
-
 
 exports.default = _default;
