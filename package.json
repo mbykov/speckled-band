@@ -1,6 +1,6 @@
 {
   "name": "speckled-band",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "productName": "Speckled band",
   "description": "Speckled band breaks a string on chunks depending on code ranges",
   "author": "Michael Bykov <michael.bykov@gmail.com>",
